@@ -12,6 +12,9 @@ kapt {
   javacOptions {
     option("-proc:full")
   }
+  arguments {
+    arg("room.schemaLocation", "$projectDir/schemas".toString())
+  }
 }
 
 apply from: '../dependencies.gradle'
@@ -42,16 +45,6 @@ android {
     versionCode versions.versionCode
     versionName versions.versionName
     buildConfigField "String", "TMDB_API_KEY", "\"${getProperty("local.properties", "tmdb_api_key")}\""
-    javaCompileOptions {
-      annotationProcessorOptions {
-        arguments += ["room.schemaLocation" : "$projectDir/schemas".toString()]
-      }
-    }
-    javaCompileOptions {
-      annotationProcessorOptions {
-        arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
-      }
-    }
   }
 
   lintOptions {

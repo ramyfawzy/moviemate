@@ -32,8 +32,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.skydoves.moviecompose.ui.movie.MovieScreen
 import com.skydoves.moviecompose.ui.people.PeopleScreen
+import com.skydoves.moviecompose.ui.theme.MovieComposeTheme
 import com.skydoves.moviecompose.ui.theme.purple200
 import com.skydoves.moviecompose.ui.tv.TvScreen
 
@@ -44,6 +46,45 @@ fun HomeTabScreen(
   selectItem: (MainScreenHomeTab, Long) -> Unit,
 ) {
   val selectedTab by viewModel.selectedTab
+
+  HomeTabScreen(
+    selectedTab = selectedTab,
+    onTabSelected = { viewModel.selectTab(it) },
+    movieScreen = { modifier ->
+      MovieScreen(
+        viewModel = viewModel,
+        selectPoster = selectItem,
+        lazyListState = tabStateHolder.movieLazyListState,
+        modifier = modifier,
+      )
+    },
+    tvScreen = { modifier ->
+      TvScreen(
+        viewModel = viewModel,
+        selectPoster = selectItem,
+        lazyListState = tabStateHolder.tvLazyListState,
+        modifier = modifier,
+      )
+    },
+    peopleScreen = { modifier ->
+      PeopleScreen(
+        viewModel = viewModel,
+        selectPerson = selectItem,
+        lazyListState = tabStateHolder.peopleLazyListState,
+        modifier = modifier,
+      )
+    },
+  )
+}
+
+@Composable
+private fun HomeTabScreen(
+  selectedTab: MainScreenHomeTab,
+  onTabSelected: (MainScreenHomeTab) -> Unit,
+  movieScreen: @Composable (Modifier) -> Unit,
+  tvScreen: @Composable (Modifier) -> Unit,
+  peopleScreen: @Composable (Modifier) -> Unit,
+) {
   val tabs = MainScreenHomeTab.entries.toTypedArray()
 
   Scaffold(
@@ -59,7 +100,7 @@ fun HomeTabScreen(
             icon = { Icon(imageVector = tab.icon, contentDescription = null) },
             label = { Text(text = stringResource(tab.title), color = Color.White) },
             selected = tab == selectedTab,
-            onClick = { viewModel.selectTab(tab) },
+            onClick = { onTabSelected(tab) },
             selectedContentColor = LocalContentColor.current,
             unselectedContentColor = LocalContentColor.current,
           )
@@ -69,27 +110,26 @@ fun HomeTabScreen(
   ) { innerPadding ->
     val modifier = Modifier.padding(innerPadding)
 
-    Crossfade(selectedTab) { destination ->
+    Crossfade(selectedTab, label = "HomeTabCrossfade") { destination ->
       when (destination) {
-        MainScreenHomeTab.MOVIE -> MovieScreen(
-          viewModel,
-          selectItem,
-          tabStateHolder.movieLazyListState,
-          modifier,
-        )
-        MainScreenHomeTab.TV -> TvScreen(
-          viewModel,
-          selectItem,
-          tabStateHolder.tvLazyListState,
-          modifier,
-        )
-        MainScreenHomeTab.PERSON -> PeopleScreen(
-          viewModel,
-          selectItem,
-          tabStateHolder.peopleLazyListState,
-          modifier,
-        )
+        MainScreenHomeTab.MOVIE -> movieScreen(modifier)
+        MainScreenHomeTab.TV -> tvScreen(modifier)
+        MainScreenHomeTab.PERSON -> peopleScreen(modifier)
       }
     }
+  }
+}
+
+@Preview
+@Composable
+private fun HomeTabScreenPreview() {
+  MovieComposeTheme {
+    HomeTabScreen(
+      selectedTab = MainScreenHomeTab.MOVIE,
+      onTabSelected = {},
+      movieScreen = { Text("Movie Screen", modifier = it) },
+      tvScreen = { Text("TV Screen", modifier = it) },
+      peopleScreen = { Text("People Screen", modifier = it) },
+    )
   }
 }

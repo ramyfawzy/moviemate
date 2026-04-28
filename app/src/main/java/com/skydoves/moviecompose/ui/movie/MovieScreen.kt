@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -44,6 +45,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.palette.graphics.Palette
@@ -56,6 +58,8 @@ import com.skydoves.moviecompose.network.Api
 import com.skydoves.moviecompose.network.compose.NetworkImage
 import com.skydoves.moviecompose.ui.main.MainScreenHomeTab
 import com.skydoves.moviecompose.ui.main.MainViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun MovieScreen(
@@ -67,6 +71,27 @@ fun MovieScreen(
   val networkState: NetworkState by viewModel.movieLoadingState
   val movies by viewModel.movies
 
+  MovieScreenContent(
+    movies = movies,
+    networkState = networkState,
+    moviePageStateFlow = viewModel.moviePageStateFlow,
+    fetchNextMoviePage = { viewModel.fetchNextMoviePage() },
+    selectPoster = selectPoster,
+    lazyListState = lazyListState,
+    modifier = modifier,
+  )
+}
+
+@Composable
+private fun MovieScreenContent(
+  movies: List<Movie>,
+  networkState: NetworkState,
+  moviePageStateFlow: StateFlow<Int>,
+  fetchNextMoviePage: () -> Unit,
+  selectPoster: (MainScreenHomeTab, Long) -> Unit,
+  lazyListState: LazyGridState,
+  modifier: Modifier = Modifier,
+) {
   LazyVerticalGrid(
     columns = GridCells.Fixed(2),
     state = lazyListState,
@@ -76,8 +101,8 @@ fun MovieScreen(
   ) {
     paging(
       items = movies,
-      currentIndexFlow = viewModel.moviePageStateFlow,
-      fetch = { viewModel.fetchNextMoviePage() },
+      currentIndexFlow = moviePageStateFlow,
+      fetch = fetchNextMoviePage,
     ) {
       MoviePoster(
         movie = it,
@@ -95,6 +120,19 @@ fun MovieScreen(
       )
     }
   }
+}
+
+@Preview
+@Composable
+private fun MovieScreenContentPreview() {
+  MovieScreenContent(
+    movies = listOf(),
+    networkState = NetworkState.SUCCESS,
+    moviePageStateFlow = MutableStateFlow(1),
+    fetchNextMoviePage = {},
+    selectPoster = { _, _ -> },
+    lazyListState = rememberLazyGridState(),
+  )
 }
 
 @Composable
