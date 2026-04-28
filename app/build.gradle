@@ -1,9 +1,17 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
   id 'com.android.application'
   id 'kotlin-android'
   id 'kotlin-kapt'
   id 'dagger.hilt.android.plugin'
   id 'org.jetbrains.kotlin.plugin.compose'
+}
+
+kapt {
+  javacOptions {
+    option("-proc:full")
+  }
 }
 
 apply from: '../dependencies.gradle'
@@ -51,12 +59,16 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_17
-    targetCompatibility JavaVersion.VERSION_17
+    sourceCompatibility JavaVersion.VERSION_21
+    targetCompatibility JavaVersion.VERSION_21
   }
 
   kotlinOptions {
-    jvmTarget = "17"
+    jvmTarget = "21"
+  }
+
+  kotlin {
+    jvmToolchain(21)
   }
 
   buildFeatures {
@@ -75,7 +87,7 @@ android {
     }
   }
 
-  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+  tasks.withType(KotlinCompile).configureEach {
     kotlinOptions.freeCompilerArgs += ["-opt-in=kotlin.time.ExperimentalTime"]
     kotlinOptions.freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
     kotlinOptions.freeCompilerArgs += ["-opt-in=androidx.compose.animation.ExperimentalAnimationApi"]
