@@ -30,7 +30,7 @@ import timber.log.Timber
 
 class MovieRepository constructor(
   private val movieService: MovieService,
-  private val movieDao: MovieDao
+  private val movieDao: MovieDao,
 ) : Repository {
 
   init {
@@ -46,7 +46,7 @@ class MovieRepository constructor(
       response.suspendOnSuccess {
         keywords = data.keywords
         movie.keywords = keywords
-        emit(keywords ?: listOf())
+        emit(keywords)
         movieDao.updateMovie(movie)
       }
     } else {
@@ -64,7 +64,7 @@ class MovieRepository constructor(
           videos = data.results
           movie.videos = videos
           movieDao.updateMovie(movie)
-          emit(videos ?: listOf())
+          emit(videos)
         }
     } else {
       emit(videos ?: listOf())
@@ -81,7 +81,7 @@ class MovieRepository constructor(
           reviews = data.results
           movie.reviews = reviews
           movieDao.updateMovie(movie)
-          emit(reviews ?: listOf())
+          emit(reviews)
         }
     } else {
       emit(reviews ?: listOf())

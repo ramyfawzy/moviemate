@@ -32,7 +32,7 @@ import timber.log.Timber
 class DiscoverRepository constructor(
   private val discoverService: TheDiscoverService,
   private val movieDao: MovieDao,
-  private val tvDao: TvDao
+  private val tvDao: TvDao,
 ) : Repository {
 
   init {

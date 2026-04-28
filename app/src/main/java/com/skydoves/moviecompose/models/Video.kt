@@ -25,5 +25,5 @@ data class Video(
   val site: String,
   val key: String,
   val size: Int,
-  val type: String
+  val type: String,
 )

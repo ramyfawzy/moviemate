@@ -51,7 +51,7 @@ object NetworkModule {
   @Singleton
   fun provideImageLoader(
     @ApplicationContext context: Context,
-    okHttpClient: OkHttpClient
+    okHttpClient: OkHttpClient,
   ): ImageLoader {
     return ImageLoader.Builder(context)
       .okHttpClient { okHttpClient }

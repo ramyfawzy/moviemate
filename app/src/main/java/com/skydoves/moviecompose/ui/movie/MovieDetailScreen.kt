@@ -17,13 +17,14 @@
 package com.skydoves.moviecompose.ui.movie
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -58,9 +59,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.core.net.toUri
 import androidx.palette.graphics.Palette
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.palette.BitmapPalette
 import com.skydoves.moviecompose.R
@@ -80,7 +80,7 @@ import com.skydoves.whatif.whatIfNotNullOrEmpty
 fun MovieDetailScreen(
   posterId: Long,
   viewModel: MovieDetailViewModel,
-  pressOnBack: () -> Unit
+  pressOnBack: () -> Unit,
 ) {
   val movie: Movie? by viewModel.movieFlow.collectAsState(initial = null)
 
@@ -94,7 +94,6 @@ fun MovieDetailScreen(
       .background(background)
       .fillMaxSize(),
   ) {
-
     AppBarWithArrow(movie?.title, pressOnBack)
 
     MovieDetailHeader(viewModel)
@@ -111,12 +110,11 @@ fun MovieDetailScreen(
 
 @Composable
 private fun MovieDetailHeader(
-  viewModel: MovieDetailViewModel
+  viewModel: MovieDetailViewModel,
 ) {
   val movie: Movie? by viewModel.movieFlow.collectAsState(initial = null)
 
   Column {
-
     var palette by remember { mutableStateOf<Palette?>(null) }
     NetworkImage(
       networkUrl = Api.getBackdropPath(movie?.backdrop_path),
@@ -126,7 +124,7 @@ private fun MovieDetailHeader(
         palette = it
       },
       modifier = Modifier
-        .height(280.dp)
+        .height(280.dp),
     )
 
     Spacer(modifier = Modifier.height(25.dp))
@@ -141,7 +139,7 @@ private fun MovieDetailHeader(
       fontWeight = FontWeight.Bold,
       modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 8.dp)
+        .padding(horizontal = 8.dp),
     )
 
     Spacer(modifier = Modifier.height(6.dp))
@@ -156,7 +154,7 @@ private fun MovieDetailHeader(
       fontWeight = FontWeight.Bold,
       modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 8.dp)
+        .padding(horizontal = 8.dp),
     )
 
     Spacer(modifier = Modifier.height(8.dp))
@@ -166,21 +164,19 @@ private fun MovieDetailHeader(
       color = Color(palette?.vibrantSwatch?.rgb ?: 0),
       modifier = Modifier
         .height(15.dp)
-        .align(Alignment.CenterHorizontally)
+        .align(Alignment.CenterHorizontally),
     )
   }
 }
 
 @Composable
 private fun MovieDetailVideos(
-  viewModel: MovieDetailViewModel
+  viewModel: MovieDetailViewModel,
 ) {
   val videos by viewModel.videoListFlow.collectAsState(listOf())
 
   videos.whatIfNotNullOrEmpty {
-
     Column {
-
       Spacer(modifier = Modifier.height(23.dp))
 
       Text(
@@ -192,16 +188,15 @@ private fun MovieDetailVideos(
         fontWeight = FontWeight.Bold,
         modifier = Modifier
           .fillMaxWidth()
-          .padding(horizontal = 15.dp)
+          .padding(horizontal = 15.dp),
       )
 
       Spacer(modifier = Modifier.height(12.dp))
 
       LazyRow(
         modifier = Modifier
-          .padding(horizontal = 15.dp)
+          .padding(horizontal = 15.dp),
       ) {
-
         items(items = videos) { video ->
 
           VideoThumbnail(video)
@@ -215,7 +210,7 @@ private fun MovieDetailVideos(
 
 @Composable
 private fun VideoThumbnail(
-  video: Video
+  video: Video,
 ) {
   val context = LocalContext.current
 
@@ -223,7 +218,6 @@ private fun VideoThumbnail(
     shape = RoundedCornerShape(8.dp),
     elevation = 8.dp,
   ) {
-
     ConstraintLayout(
       modifier = Modifier
         .width(150.dp)
@@ -231,10 +225,10 @@ private fun VideoThumbnail(
         .clickable(
           onClick = {
             val playVideoIntent =
-              Intent(Intent.ACTION_VIEW, Uri.parse(Api.getYoutubeVideoPath(video.key)))
+              Intent(Intent.ACTION_VIEW, Api.getYoutubeVideoPath(video.key).toUri())
             context.startActivity(playVideoIntent)
-          }
-        )
+          },
+        ),
     ) {
       val (thumbnail, icon, box, title) = createRefs()
 
@@ -249,7 +243,7 @@ private fun VideoThumbnail(
           },
         bitmapPalette = BitmapPalette {
           palette = it
-        }
+        },
       )
 
       Image(
@@ -263,7 +257,7 @@ private fun VideoThumbnail(
             bottom.linkTo(parent.bottom)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
-          }
+          },
       )
 
       Crossfade(
@@ -272,14 +266,13 @@ private fun VideoThumbnail(
           .height(25.dp)
           .constrainAs(box) {
             bottom.linkTo(parent.bottom)
-          }
+          },
       ) {
-
         Box(
           modifier = Modifier
             .background(Color(it?.darkVibrantSwatch?.rgb ?: 0))
             .alpha(0.7f)
-            .fillMaxSize()
+            .fillMaxSize(),
         )
       }
 
@@ -297,7 +290,7 @@ private fun VideoThumbnail(
           .constrainAs(title) {
             top.linkTo(box.top)
             bottom.linkTo(box.bottom)
-          }
+          },
       )
     }
   }
@@ -306,15 +299,13 @@ private fun VideoThumbnail(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun MovieDetailSummary(
-  viewModel: MovieDetailViewModel
+  viewModel: MovieDetailViewModel,
 ) {
   val movie: Movie? by viewModel.movieFlow.collectAsState(initial = null)
   val keywords by viewModel.keywordListFlow.collectAsState(listOf())
 
   keywords.whatIfNotNullOrEmpty {
-
     Column {
-
       Spacer(modifier = Modifier.height(23.dp))
 
       Text(
@@ -326,7 +317,7 @@ private fun MovieDetailSummary(
         fontWeight = FontWeight.Bold,
         modifier = Modifier
           .fillMaxWidth()
-          .padding(horizontal = 15.dp)
+          .padding(horizontal = 15.dp),
       )
 
       Spacer(modifier = Modifier.height(12.dp))
@@ -338,15 +329,13 @@ private fun MovieDetailSummary(
         fontWeight = FontWeight.Bold,
         modifier = Modifier
           .fillMaxWidth()
-          .padding(horizontal = 15.dp)
+          .padding(horizontal = 15.dp),
       )
 
       Spacer(modifier = Modifier.height(15.dp))
 
       FlowRow {
-
         it.forEach {
-
           Keyword(it)
         }
       }
@@ -360,30 +349,27 @@ private fun Keyword(keyword: Keyword) {
     shape = RoundedCornerShape(32.dp),
     elevation = 8.dp,
     color = purple200,
-    modifier = Modifier.padding(8.dp)
+    modifier = Modifier.padding(8.dp),
   ) {
-
     Text(
       text = keyword.name,
       style = MaterialTheme.typography.body1,
       color = Color.White,
       fontWeight = FontWeight.Bold,
       modifier = Modifier
-        .padding(horizontal = 8.dp, vertical = 4.dp)
+        .padding(horizontal = 8.dp, vertical = 4.dp),
     )
   }
 }
 
 @Composable
 private fun MovieDetailReviews(
-  viewModel: MovieDetailViewModel
+  viewModel: MovieDetailViewModel,
 ) {
   val reviews by viewModel.reviewListFlow.collectAsState(listOf())
 
   reviews.whatIfNotNullOrEmpty {
-
     Column {
-
       Spacer(modifier = Modifier.height(23.dp))
 
       Text(
@@ -395,13 +381,11 @@ private fun MovieDetailReviews(
         fontWeight = FontWeight.Bold,
         modifier = Modifier
           .fillMaxWidth()
-          .padding(horizontal = 15.dp)
+          .padding(horizontal = 15.dp),
       )
 
       Column {
-
         reviews.forEach {
-
           Review(it)
         }
       }
@@ -411,12 +395,11 @@ private fun MovieDetailReviews(
 
 @Composable
 private fun Review(
-  review: Review
+  review: Review,
 ) {
   var expanded: Boolean by remember { mutableStateOf(false) }
 
   Column {
-
     Spacer(modifier = Modifier.height(12.dp))
 
     Text(
@@ -428,7 +411,7 @@ private fun Review(
       overflow = TextOverflow.Ellipsis,
       modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 15.dp)
+        .padding(horizontal = 15.dp),
     )
 
     Spacer(modifier = Modifier.height(12.dp))
@@ -441,7 +424,7 @@ private fun Review(
         modifier = Modifier
           .fillMaxWidth()
           .padding(horizontal = 15.dp)
-          .clickable { expanded = !expanded }
+          .clickable { expanded = !expanded },
       )
     } else {
       Text(
@@ -453,7 +436,7 @@ private fun Review(
         modifier = Modifier
           .fillMaxWidth()
           .padding(horizontal = 15.dp)
-          .clickable { expanded = !expanded }
+          .clickable { expanded = !expanded },
       )
     }
   }

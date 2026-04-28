@@ -31,7 +31,7 @@ fun ConstraintLayoutScope.ImageBalloonAnchor(
   reference: ConstrainedLayoutReference,
   modifier: Modifier,
   content: String,
-  onClick: (Balloon, View) -> Unit
+  onClick: (Balloon, View) -> Unit,
 ) {
   val context = LocalContext.current
   val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
@@ -41,6 +41,6 @@ fun ConstraintLayoutScope.ImageBalloonAnchor(
     reference = reference,
     modifier = modifier,
     balloon = balloon,
-    onAnchorClick = onClick
+    onAnchorClick = onClick,
   )
 }

@@ -41,5 +41,5 @@ data class Tv(
   val original_language: String,
   val vote_count: Int,
   val name: String,
-  val original_name: String
+  val original_name: String,
 )

@@ -35,9 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     setContent {
       CompositionLocalProvider(LocalCoilImageLoader provides viewModel.imageLoader) {
-
         MovieComposeTheme {
-
           MainScreen()
         }
       }

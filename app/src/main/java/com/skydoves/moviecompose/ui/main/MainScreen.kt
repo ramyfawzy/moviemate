@@ -62,7 +62,7 @@ fun MainScreen() {
   NavHost(navController = navController, startDestination = NavScreen.Home.route) {
     composable(
       route = NavScreen.Home.route,
-      arguments = emptyList()
+      arguments = emptyList(),
     ) {
       HomeTabScreen(
         viewModel = hiltViewModel(),
@@ -73,14 +73,14 @@ fun MainScreen() {
             MainScreenHomeTab.TV -> navController.navigate("${NavScreen.TvDetails.route}/$index")
             MainScreenHomeTab.PERSON -> navController.navigate("${NavScreen.PersonDetails.route}/$index")
           }
-        }
+        },
       )
     }
     composable(
       route = NavScreen.MovieDetails.routeWithArgument,
       arguments = listOf(
-        navArgument(NavScreen.MovieDetails.argument0) { type = NavType.LongType }
-      )
+        navArgument(NavScreen.MovieDetails.argument0) { type = NavType.LongType },
+      ),
     ) { backStackEntry ->
 
       val posterId =
@@ -94,8 +94,8 @@ fun MainScreen() {
     composable(
       route = NavScreen.TvDetails.routeWithArgument,
       arguments = listOf(
-        navArgument(NavScreen.TvDetails.argument0) { type = NavType.LongType }
-      )
+        navArgument(NavScreen.TvDetails.argument0) { type = NavType.LongType },
+      ),
     ) { backStackEntry ->
 
       val posterId = backStackEntry.arguments?.getLong(NavScreen.TvDetails.argument0)
@@ -108,8 +108,8 @@ fun MainScreen() {
     composable(
       route = NavScreen.PersonDetails.routeWithArgument,
       arguments = listOf(
-        navArgument(NavScreen.PersonDetails.argument0) { type = NavType.LongType }
-      )
+        navArgument(NavScreen.PersonDetails.argument0) { type = NavType.LongType },
+      ),
     ) { backStackEntry ->
 
       val personId =
@@ -129,7 +129,7 @@ fun MainAppBar() {
   TopAppBar(
     elevation = 6.dp,
     backgroundColor = purple200,
-    modifier = Modifier.height(58.dp)
+    modifier = Modifier.height(58.dp),
   ) {
     Text(
       modifier = Modifier
@@ -138,7 +138,7 @@ fun MainAppBar() {
       text = stringResource(R.string.app_name),
       color = Color.White,
       fontSize = 18.sp,
-      fontWeight = FontWeight.Bold
+      fontWeight = FontWeight.Bold,
     )
   }
 }
@@ -146,9 +146,9 @@ fun MainAppBar() {
 @Immutable
 enum class MainScreenHomeTab(
   @StringRes val title: Int,
-  val icon: ImageVector
+  val icon: ImageVector,
 ) {
   MOVIE(R.string.menu_movie, Icons.Filled.Home),
   TV(R.string.menu_tv, Icons.Filled.Tv),
-  PERSON(R.string.menu_person, Icons.Filled.Person);
+  PERSON(R.string.menu_person, Icons.Filled.Person),
 }

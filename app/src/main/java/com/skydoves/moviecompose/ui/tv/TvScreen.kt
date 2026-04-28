@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -46,7 +47,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.palette.graphics.Palette
-import androidx.compose.foundation.layout.statusBarsPadding
 import com.skydoves.landscapist.palette.BitmapPalette
 import com.skydoves.moviecompose.extensions.paging
 import com.skydoves.moviecompose.models.entities.Tv
@@ -62,7 +62,7 @@ fun TvScreen(
   viewModel: MainViewModel,
   selectPoster: (MainScreenHomeTab, Long) -> Unit,
   lazyListState: LazyGridState,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
 ) {
   val networkState: NetworkState by viewModel.tvLoadingState
   val tvs by viewModel.tvs
@@ -72,29 +72,26 @@ fun TvScreen(
     state = lazyListState,
     modifier = modifier
       .statusBarsPadding()
-      .background(MaterialTheme.colors.background)
+      .background(MaterialTheme.colors.background),
   ) {
-
     paging(
       items = tvs,
       currentIndexFlow = viewModel.tvPageStateFlow,
-      fetch = { viewModel.fetchNextTvPage() }
+      fetch = { viewModel.fetchNextTvPage() },
     ) {
-
       TvPoster(
         tv = it,
-        selectPoster = selectPoster
+        selectPoster = selectPoster,
       )
     }
   }
 
   networkState.onLoading {
     Box(
-      modifier = Modifier.fillMaxSize()
+      modifier = Modifier.fillMaxSize(),
     ) {
-
       CircularProgressIndicator(
-        modifier = Modifier.align(Alignment.Center)
+        modifier = Modifier.align(Alignment.Center),
       )
     }
   }
@@ -104,7 +101,7 @@ fun TvScreen(
 private fun TvPoster(
   tv: Tv,
   selectPoster: (MainScreenHomeTab, Long) -> Unit,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
 ) {
   Surface(
     modifier = modifier
@@ -113,11 +110,10 @@ private fun TvPoster(
       .clickable(
         onClick = {
           selectPoster(MainScreenHomeTab.TV, tv.id)
-        }
+        },
       ),
-    color = MaterialTheme.colors.onBackground
+    color = MaterialTheme.colors.onBackground,
   ) {
-
     ConstraintLayout {
       val (image, box, title) = createRefs()
 
@@ -131,7 +127,7 @@ private fun TvPoster(
           },
         bitmapPalette = BitmapPalette {
           palette = it
-        }
+        },
       )
 
       Crossfade(
@@ -141,14 +137,13 @@ private fun TvPoster(
           .constrainAs(box) {
             top.linkTo(image.bottom)
             bottom.linkTo(parent.bottom)
-          }
+          },
       ) {
-
         Box(
           modifier = Modifier
             .background(Color(it?.darkVibrantSwatch?.rgb ?: 0))
             .alpha(0.7f)
-            .fillMaxSize()
+            .fillMaxSize(),
         )
       }
 
@@ -166,7 +161,7 @@ private fun TvPoster(
           .constrainAs(title) {
             top.linkTo(box.top)
             bottom.linkTo(box.bottom)
-          }
+          },
       )
     }
   }

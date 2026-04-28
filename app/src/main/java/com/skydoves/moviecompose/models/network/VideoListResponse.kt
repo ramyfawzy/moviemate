@@ -23,5 +23,5 @@ import com.skydoves.moviecompose.models.Video
 @Immutable
 data class VideoListResponse(
   val id: Int,
-  val results: List<Video>
+  val results: List<Video>,
 ) : NetworkResponseModel

@@ -30,7 +30,7 @@ import timber.log.Timber
 
 class TvRepository constructor(
   private val tvService: TvService,
-  private val tvDao: TvDao
+  private val tvDao: TvDao,
 ) : Repository {
 
   init {
@@ -47,7 +47,7 @@ class TvRepository constructor(
         keywords = data.keywords
         tv.keywords = keywords
         tvDao.updateTv(tv)
-        emit(keywords ?: listOf())
+        emit(keywords)
       }
     } else {
       emit(keywords ?: listOf())
@@ -64,7 +64,7 @@ class TvRepository constructor(
         videos = data.results
         tv.videos = videos
         tvDao.updateTv(tv)
-        emit(videos ?: listOf())
+        emit(videos)
       }
     } else {
       emit(videos ?: listOf())
@@ -81,7 +81,7 @@ class TvRepository constructor(
         reviews = data.results
         tv.reviews = reviews
         tvDao.updateTv(tv)
-        emit(reviews ?: listOf())
+        emit(reviews)
       }
     } else {
       emit(reviews ?: listOf())

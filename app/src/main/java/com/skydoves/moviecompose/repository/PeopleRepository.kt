@@ -30,7 +30,7 @@ import timber.log.Timber
 
 class PeopleRepository constructor(
   private val peopleService: PeopleService,
-  private val peopleDao: PeopleDao
+  private val peopleDao: PeopleDao,
 ) : Repository {
 
   init {

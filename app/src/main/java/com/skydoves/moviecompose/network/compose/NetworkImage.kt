@@ -39,7 +39,7 @@ fun NetworkImage(
   shimmerParams: ShimmerParams? = ShimmerParams(
     baseColor = MaterialTheme.colors.background,
     highlightColor = shimmerHighLight,
-    dropOff = 0.65f
+    dropOff = 0.65f,
   ),
 ) {
   val url = networkUrl ?: return
@@ -55,9 +55,9 @@ fun NetworkImage(
           text = "image request failed.",
           textAlign = TextAlign.Center,
           style = MaterialTheme.typography.body2,
-          modifier = Modifier.fillMaxSize()
+          modifier = Modifier.fillMaxSize(),
         )
-      }
+      },
     )
   } else {
     CoilImage(
@@ -72,9 +72,9 @@ fun NetworkImage(
           text = "image request failed.",
           textAlign = TextAlign.Center,
           style = MaterialTheme.typography.body2,
-          modifier = Modifier.fillMaxSize()
+          modifier = Modifier.fillMaxSize(),
         )
-      }
+      },
     )
   }
 }

@@ -18,6 +18,8 @@ package com.skydoves.moviecompose.ui.people
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -43,8 +45,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import com.skydoves.moviecompose.network.Api
 import com.skydoves.moviecompose.network.compose.NetworkImage
 import com.skydoves.moviecompose.ui.custom.AppBarWithArrow
@@ -57,7 +57,7 @@ import com.skydoves.whatif.whatIfNotNullOrEmpty
 fun PersonDetailScreen(
   personId: Long,
   viewModel: PersonDetailViewModel,
-  pressOnBack: () -> Unit
+  pressOnBack: () -> Unit,
 ) {
   val person by viewModel.personFlow.collectAsState(initial = null)
 
@@ -68,9 +68,8 @@ fun PersonDetailScreen(
   Column(
     modifier = Modifier
       .verticalScroll(rememberScrollState())
-      .background(background)
+      .background(background),
   ) {
-
     AppBarWithArrow(person?.name, pressOnBack)
 
     Profile(viewModel)
@@ -83,7 +82,7 @@ fun PersonDetailScreen(
 
 @Composable
 private fun Profile(
-  viewModel: PersonDetailViewModel
+  viewModel: PersonDetailViewModel,
 ) {
   val person by viewModel.personFlow.collectAsState(initial = null)
   val personDetail by viewModel.personDetailFlow.collectAsState(initial = null)
@@ -94,11 +93,9 @@ private fun Profile(
       .padding(10.dp),
     color = background800,
     elevation = 8.dp,
-    shape = RoundedCornerShape(8.dp)
+    shape = RoundedCornerShape(8.dp),
   ) {
-
     Column {
-
       Spacer(modifier = Modifier.height(20.dp))
 
       NetworkImage(
@@ -107,7 +104,7 @@ private fun Profile(
         modifier = Modifier
           .align(Alignment.CenterHorizontally)
           .clip(CircleShape)
-          .size(110.dp)
+          .size(110.dp),
       )
 
       Spacer(modifier = Modifier.height(7.dp))
@@ -121,7 +118,7 @@ private fun Profile(
         fontWeight = FontWeight.Bold,
         modifier = Modifier
           .align(Alignment.CenterHorizontally)
-          .padding(8.dp)
+          .padding(8.dp),
       )
 
       Spacer(modifier = Modifier.height(10.dp))
@@ -133,7 +130,7 @@ private fun Profile(
         fontWeight = FontWeight.Bold,
         modifier = Modifier
           .align(Alignment.CenterHorizontally)
-          .padding(8.dp)
+          .padding(8.dp),
       )
 
       Spacer(modifier = Modifier.height(10.dp))
@@ -144,18 +141,15 @@ private fun Profile(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun KnownAs(
-  viewModel: PersonDetailViewModel
+  viewModel: PersonDetailViewModel,
 ) {
   val personDetail by viewModel.personDetailFlow.collectAsState(initial = null)
 
   personDetail?.also_known_as?.whatIfNotNullOrEmpty {
-
     Spacer(modifier = Modifier.height(15.dp))
 
     FlowRow {
-
       it.forEach {
-
         Keyword(it)
       }
     }
@@ -168,16 +162,15 @@ private fun Keyword(keyword: String) {
     shape = RoundedCornerShape(32.dp),
     elevation = 8.dp,
     color = purple200,
-    modifier = Modifier.padding(8.dp)
+    modifier = Modifier.padding(8.dp),
   ) {
-
     Text(
       text = keyword,
       style = MaterialTheme.typography.body1,
       color = Color.White,
       fontWeight = FontWeight.Bold,
       modifier = Modifier
-        .padding(horizontal = 8.dp, vertical = 4.dp)
+        .padding(horizontal = 8.dp, vertical = 4.dp),
     )
   }
 }

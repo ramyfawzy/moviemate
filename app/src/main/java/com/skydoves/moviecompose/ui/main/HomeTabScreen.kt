@@ -17,6 +17,7 @@
 package com.skydoves.moviecompose.ui.main
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -31,8 +32,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.navigationBarsPadding
 import com.skydoves.moviecompose.ui.movie.MovieScreen
 import com.skydoves.moviecompose.ui.people.PeopleScreen
 import com.skydoves.moviecompose.ui.theme.purple200
@@ -42,21 +41,19 @@ import com.skydoves.moviecompose.ui.tv.TvScreen
 fun HomeTabScreen(
   viewModel: MainViewModel,
   tabStateHolder: HomeTabStateHolder,
-  selectItem: (MainScreenHomeTab, Long) -> Unit
+  selectItem: (MainScreenHomeTab, Long) -> Unit,
 ) {
   val selectedTab by viewModel.selectedTab
-  val tabs = MainScreenHomeTab.values()
+  val tabs = MainScreenHomeTab.entries.toTypedArray()
 
   Scaffold(
     backgroundColor = MaterialTheme.colors.primarySurface,
     topBar = { MainAppBar() },
     bottomBar = {
-
       BottomNavigation(
         backgroundColor = purple200,
-        modifier = Modifier.navigationBarsPadding()
+        modifier = Modifier.navigationBarsPadding(),
       ) {
-
         tabs.forEach { tab ->
           BottomNavigationItem(
             icon = { Icon(imageVector = tab.icon, contentDescription = null) },
@@ -64,11 +61,11 @@ fun HomeTabScreen(
             selected = tab == selectedTab,
             onClick = { viewModel.selectTab(tab) },
             selectedContentColor = LocalContentColor.current,
-            unselectedContentColor = LocalContentColor.current
+            unselectedContentColor = LocalContentColor.current,
           )
         }
       }
-    }
+    },
   ) { innerPadding ->
     val modifier = Modifier.padding(innerPadding)
 

@@ -23,5 +23,5 @@ import com.skydoves.moviecompose.models.NetworkResponseModel
 @Immutable
 data class KeywordListResponse(
   val id: Int,
-  val keywords: List<Keyword>
+  val keywords: List<Keyword>,
 ) : NetworkResponseModel

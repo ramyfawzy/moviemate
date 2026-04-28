@@ -42,5 +42,5 @@ data class Movie(
   val popularity: Float,
   val vote_count: Int,
   val video: Boolean,
-  val vote_average: Float
+  val vote_average: Float,
 )

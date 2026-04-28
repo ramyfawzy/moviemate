@@ -27,7 +27,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,12 +40,12 @@ import com.skydoves.moviecompose.ui.theme.purple200
 @Composable
 fun AppBarWithArrow(
   title: String?,
-  pressOnBack: () -> Unit
+  pressOnBack: () -> Unit,
 ) {
   TopAppBar(
     elevation = 6.dp,
     backgroundColor = purple200,
-    modifier = Modifier.height(58.dp)
+    modifier = Modifier.height(58.dp),
   ) {
     Row {
       Spacer(modifier = Modifier.width(10.dp))
@@ -59,7 +58,7 @@ fun AppBarWithArrow(
           .align(Alignment.CenterVertically)
           .clickable {
             pressOnBack()
-          }
+          },
       )
 
       Spacer(modifier = Modifier.width(12.dp))
@@ -71,7 +70,7 @@ fun AppBarWithArrow(
         text = title ?: "",
         color = Color.White,
         fontSize = 18.sp,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
       )
     }
   }

@@ -42,7 +42,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
   val imageLoader: ImageLoader,
   private val discoverRepository: DiscoverRepository,
-  private val peopleRepository: PeopleRepository
+  private val peopleRepository: PeopleRepository,
 ) : ViewModel() {
 
   private val _selectedTab: MutableState<MainScreenHomeTab> =
@@ -59,7 +59,7 @@ class MainViewModel @Inject constructor(
     discoverRepository.loadMovies(
       page = it,
       success = { _movieLoadingState.value = NetworkState.SUCCESS },
-      error = { _movieLoadingState.value = NetworkState.ERROR }
+      error = { _movieLoadingState.value = NetworkState.ERROR },
     )
   }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
 
@@ -73,7 +73,7 @@ class MainViewModel @Inject constructor(
     discoverRepository.loadTvs(
       page = it,
       success = { _tvLoadingState.value = NetworkState.SUCCESS },
-      error = { _tvLoadingState.value = NetworkState.ERROR }
+      error = { _tvLoadingState.value = NetworkState.ERROR },
     )
   }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
 
@@ -87,7 +87,7 @@ class MainViewModel @Inject constructor(
     peopleRepository.loadPeople(
       page = it,
       success = { _personLoadingState.value = NetworkState.SUCCESS },
-      error = { _personLoadingState.value = NetworkState.ERROR }
+      error = { _personLoadingState.value = NetworkState.ERROR },
     )
   }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
 

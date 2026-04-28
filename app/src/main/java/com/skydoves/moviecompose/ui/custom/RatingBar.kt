@@ -18,14 +18,13 @@ package com.skydoves.moviecompose.ui.custom
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.runtime.Composable
@@ -50,7 +49,7 @@ import kotlin.math.sin
 fun RatingBar(
   rating: Float,
   modifier: Modifier = Modifier,
-  color: Color = purple200
+  color: Color = purple200,
 ) {
   Row(modifier = modifier.wrapContentSize()) {
     (1..5).forEach { step ->
@@ -68,33 +67,33 @@ fun RatingBar(
 private fun RatingStar(
   rating: Float,
   ratingColor: Color = purple200,
-  backgroundColor: Color = Color.Gray
+  backgroundColor: Color = Color.Gray,
 ) {
-  BoxWithConstraints(
+  Box(
     modifier = Modifier
       .fillMaxHeight()
       .aspectRatio(1f)
-      .clip(starShape)
+      .clip(starShape),
   ) {
-    Canvas(modifier = Modifier.size(maxHeight)) {
+    Canvas(modifier = Modifier.fillMaxSize()) {
       drawRect(
         brush = SolidColor(backgroundColor),
         size = Size(
           height = size.height * 1.4f,
-          width = size.width * 1.4f
+          width = size.width * 1.4f,
         ),
         topLeft = Offset(
           x = -(size.width * 0.1f),
-          y = -(size.height * 0.1f)
-        )
+          y = -(size.height * 0.1f),
+        ),
       )
       if (rating > 0) {
         drawRect(
           brush = SolidColor(ratingColor),
           size = Size(
             height = size.height * 1.1f,
-            width = size.width * rating
-          )
+            width = size.width * rating,
+          ),
         )
       }
     }
@@ -138,11 +137,11 @@ fun RatingBarPreview() {
   Column(
     Modifier
       .fillMaxSize()
-      .background(Color.White)
+      .background(Color.White),
   ) {
     RatingBar(
       3.5f,
-      modifier = Modifier.height(20.dp)
+      modifier = Modifier.height(20.dp),
     )
   }
 }

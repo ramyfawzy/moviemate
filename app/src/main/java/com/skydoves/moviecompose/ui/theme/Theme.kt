@@ -30,7 +30,7 @@ private val DarkColorPalette = darkColors(
   primaryVariant = purple500,
   secondary = purple500,
   onPrimary = Color.White,
-  onSecondary = Color.White
+  onSecondary = Color.White,
 )
 
 private val LightColorPalette = lightColors(
@@ -40,13 +40,13 @@ private val LightColorPalette = lightColors(
   primaryVariant = purple500,
   secondary = purple500,
   onPrimary = Color.White,
-  onSecondary = Color.White
+  onSecondary = Color.White,
 )
 
 @Composable
 fun MovieComposeTheme(
   darkTheme: Boolean = isSystemInDarkTheme(),
-  content: @Composable () -> Unit
+  content: @Composable () -> Unit,
 ) {
   val colors = if (darkTheme) {
     DarkColorPalette
@@ -64,6 +64,6 @@ fun MovieComposeTheme(
     colors = colors,
     typography = typography,
     shapes = shapes,
-    content = content
+    content = content,
   )
 }

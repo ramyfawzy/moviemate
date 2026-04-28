@@ -26,7 +26,6 @@ import com.skydoves.sandwich.SandwichInitializer
 class SandwichInitializer : Initializer<Unit> {
 
   override fun create(context: Context) {
-
     // initialize global sandwich operator
     SandwichInitializer.sandwichOperator = GlobalResponseOperator<Unit>(context)
   }

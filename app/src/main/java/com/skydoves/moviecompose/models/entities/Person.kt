@@ -30,5 +30,5 @@ data class Person(
   val adult: Boolean,
   val id: Long,
   val name: String,
-  val popularity: Float
+  val popularity: Float,
 )

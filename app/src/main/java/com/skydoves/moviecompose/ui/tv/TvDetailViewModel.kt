@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TvDetailViewModel @Inject constructor(
-  private val tvRepository: TvRepository
+  private val tvRepository: TvRepository,
 ) : ViewModel() {
 
   private val tvIdSharedFlow: MutableSharedFlow<Long> = MutableSharedFlow(replay = 1)

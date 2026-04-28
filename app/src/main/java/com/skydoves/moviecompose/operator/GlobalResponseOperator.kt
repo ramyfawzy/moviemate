@@ -30,7 +30,7 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class GlobalResponseOperator<T> constructor(
-  private val context: Context
+  private val context: Context,
 ) : ApiResponseSuspendOperator<T>() {
 
   // handle the case when the API request gets a success response.

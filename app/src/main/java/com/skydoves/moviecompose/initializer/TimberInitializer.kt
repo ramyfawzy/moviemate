@@ -33,6 +33,6 @@ class TimberInitializer : Initializer<Unit> {
   }
 
   override fun dependencies(): List<Class<out Initializer<*>>> = listOf(
-    SandwichInitializer::class.java
+    SandwichInitializer::class.java,
   )
 }

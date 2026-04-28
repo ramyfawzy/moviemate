@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -43,7 +44,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.compose.foundation.layout.statusBarsPadding
 import com.skydoves.moviecompose.extensions.paging
 import com.skydoves.moviecompose.models.entities.Person
 import com.skydoves.moviecompose.models.network.NetworkState
@@ -59,7 +59,7 @@ fun PeopleScreen(
   viewModel: MainViewModel,
   selectPerson: (MainScreenHomeTab, Long) -> Unit,
   lazyListState: LazyGridState,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
 ) {
   val networkState: NetworkState by viewModel.personLoadingState
   val people by viewModel.people
@@ -69,30 +69,27 @@ fun PeopleScreen(
     state = lazyListState,
     modifier = modifier
       .statusBarsPadding()
-      .background(MaterialTheme.colors.background)
+      .background(MaterialTheme.colors.background),
   ) {
-
     paging(
       items = people,
       currentIndexFlow = viewModel.peoplePageStateFlow,
       threshold = 2,
-      fetch = { viewModel.fetchNextPeoplePage() }
+      fetch = { viewModel.fetchNextPeoplePage() },
     ) {
-
       PersonCard(
         person = it,
-        selectPerson = selectPerson
+        selectPerson = selectPerson,
       )
     }
   }
 
   networkState.onLoading {
     Box(
-      modifier = Modifier.fillMaxSize()
+      modifier = Modifier.fillMaxSize(),
     ) {
-
       CircularProgressIndicator(
-        modifier = Modifier.align(Alignment.Center)
+        modifier = Modifier.align(Alignment.Center),
       )
     }
   }
@@ -102,20 +99,19 @@ fun PeopleScreen(
 private fun PersonCard(
   person: Person,
   selectPerson: (MainScreenHomeTab, Long) -> Unit,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
 ) {
   Surface(
     modifier = modifier
       .height(200.dp)
       .padding(4.dp)
       .clickable(
-        onClick = { selectPerson(MainScreenHomeTab.PERSON, person.id) }
+        onClick = { selectPerson(MainScreenHomeTab.PERSON, person.id) },
       ),
     color = background800,
     elevation = 8.dp,
-    shape = RoundedCornerShape(8.dp)
+    shape = RoundedCornerShape(8.dp),
   ) {
-
     ConstraintLayout(modifier = Modifier.padding(16.dp)) {
       val (image, title) = createRefs()
 
@@ -129,7 +125,7 @@ private fun PersonCard(
             centerHorizontallyTo(parent)
             top.linkTo(parent.top)
             bottom.linkTo(title.top)
-          }
+          },
       )
 
       Text(
@@ -145,7 +141,7 @@ private fun PersonCard(
             centerHorizontallyTo(parent)
             top.linkTo(image.bottom)
             bottom.linkTo(parent.bottom)
-          }
+          },
       )
     }
   }

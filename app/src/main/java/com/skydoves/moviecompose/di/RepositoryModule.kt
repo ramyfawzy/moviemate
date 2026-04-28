@@ -42,7 +42,7 @@ object RepositoryModule {
   fun provideDiscoverRepository(
     discoverService: TheDiscoverService,
     movieDao: MovieDao,
-    tvDao: TvDao
+    tvDao: TvDao,
   ): DiscoverRepository {
     return DiscoverRepository(discoverService, movieDao, tvDao)
   }
@@ -51,7 +51,7 @@ object RepositoryModule {
   @ViewModelScoped
   fun provideMovieRepository(
     movieService: MovieService,
-    movieDao: MovieDao
+    movieDao: MovieDao,
   ): MovieRepository {
     return MovieRepository(movieService, movieDao)
   }
@@ -60,7 +60,7 @@ object RepositoryModule {
   @ViewModelScoped
   fun providePeopleRepository(
     peopleService: PeopleService,
-    peopleDao: PeopleDao
+    peopleDao: PeopleDao,
   ): PeopleRepository {
     return PeopleRepository(peopleService, peopleDao)
   }
@@ -69,7 +69,7 @@ object RepositoryModule {
   @ViewModelScoped
   fun provideTvRepository(
     tvService: TvService,
-    tvDao: TvDao
+    tvDao: TvDao,
   ): TvRepository {
     return TvRepository(tvService, tvDao)
   }

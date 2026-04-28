@@ -22,7 +22,7 @@ enum class NetworkState {
   IDLE,
   LOADING,
   ERROR,
-  SUCCESS
+  SUCCESS,
 }
 
 @Composable

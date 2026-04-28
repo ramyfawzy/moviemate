@@ -31,7 +31,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PersonDetailViewModel @Inject constructor(
-  private val peopleRepository: PeopleRepository
+  private val peopleRepository: PeopleRepository,
 ) : ViewModel() {
 
   private val personIdSharedFlow: MutableSharedFlow<Long> = MutableSharedFlow(replay = 1)
