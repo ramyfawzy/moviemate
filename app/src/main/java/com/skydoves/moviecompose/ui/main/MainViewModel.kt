@@ -52,7 +52,9 @@ class MainViewModel @Inject constructor(
   private val _movieLoadingState: MutableState<NetworkState> = mutableStateOf(NetworkState.IDLE)
   val movieLoadingState: State<NetworkState> get() = _movieLoadingState
 
-  val movies: State<MutableList<Movie>> = mutableStateOf(mutableListOf())
+  private val _movies: MutableState<List<Movie>> = mutableStateOf(listOf())
+  val movies: State<List<Movie>> get() = _movies
+
   val moviePageStateFlow: MutableStateFlow<Int> = MutableStateFlow(1)
   private val newMovieFlow = moviePageStateFlow.flatMapLatest {
     _movieLoadingState.value = NetworkState.LOADING
@@ -66,7 +68,9 @@ class MainViewModel @Inject constructor(
   private val _tvLoadingState: MutableState<NetworkState> = mutableStateOf(NetworkState.IDLE)
   val tvLoadingState: State<NetworkState> get() = _tvLoadingState
 
-  val tvs: State<MutableList<Tv>> = mutableStateOf(mutableListOf())
+  private val _tvs: MutableState<List<Tv>> = mutableStateOf(listOf())
+  val tvs: State<List<Tv>> get() = _tvs
+
   val tvPageStateFlow: MutableStateFlow<Int> = MutableStateFlow(1)
   private val newTvFlow = tvPageStateFlow.flatMapLatest {
     _tvLoadingState.value = NetworkState.LOADING
@@ -80,7 +84,9 @@ class MainViewModel @Inject constructor(
   private val _personLoadingState: MutableState<NetworkState> = mutableStateOf(NetworkState.IDLE)
   val personLoadingState: State<NetworkState> get() = _personLoadingState
 
-  val people: State<MutableList<Person>> = mutableStateOf(mutableListOf())
+  private val _people: MutableState<List<Person>> = mutableStateOf(listOf())
+  val people: State<List<Person>> get() = _people
+
   val peoplePageStateFlow: MutableStateFlow<Int> = MutableStateFlow(1)
   private val newPeople = peoplePageStateFlow.flatMapLatest {
     _personLoadingState.value = NetworkState.LOADING
@@ -94,19 +100,19 @@ class MainViewModel @Inject constructor(
   init {
     viewModelScope.launch(Dispatchers.IO) {
       newMovieFlow.collectLatest {
-        movies.value.addAll(it)
+        _movies.value = _movies.value + it
       }
     }
 
     viewModelScope.launch(Dispatchers.IO) {
       newTvFlow.collectLatest {
-        tvs.value.addAll(it)
+        _tvs.value = _tvs.value + it
       }
     }
 
     viewModelScope.launch(Dispatchers.IO) {
       newPeople.collectLatest {
-        people.value.addAll(it)
+        _people.value = _people.value + it
       }
     }
   }
@@ -130,6 +136,21 @@ class MainViewModel @Inject constructor(
   fun fetchNextPeoplePage() {
     if (personLoadingState.value != NetworkState.LOADING) {
       peoplePageStateFlow.value++
+    }
+  }
+
+  fun insertMovie(movie: Movie, success: () -> Unit) {
+    viewModelScope.launch(Dispatchers.IO) {
+      discoverRepository.insertMovie(
+        movie = movie,
+        success = {
+          _movies.value = listOf(movie) + _movies.value
+          viewModelScope.launch(Dispatchers.Main) {
+            success()
+          }
+        },
+        error = { }
+      )
     }
   }
 }

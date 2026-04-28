@@ -17,6 +17,8 @@
 package com.skydoves.moviecompose.repository
 
 import androidx.annotation.WorkerThread
+import com.skydoves.moviecompose.models.entities.Movie
+import com.skydoves.moviecompose.network.service.MovieService
 import com.skydoves.moviecompose.network.service.TheDiscoverService
 import com.skydoves.moviecompose.persistence.MovieDao
 import com.skydoves.moviecompose.persistence.TvDao
@@ -31,6 +33,7 @@ import timber.log.Timber
 
 class DiscoverRepository constructor(
   private val discoverService: TheDiscoverService,
+  private val movieService: MovieService,
   private val movieDao: MovieDao,
   private val tvDao: TvDao,
 ) : Repository {
@@ -74,4 +77,16 @@ class DiscoverRepository constructor(
       emit(tvs)
     }
   }.onCompletion { success() }.flowOn(Dispatchers.IO)
+
+  @WorkerThread
+  suspend fun insertMovie(movie: Movie, success: () -> Unit, error: () -> Unit) {
+    movieService.postMovie(movie).suspendOnSuccess {
+      movieDao.insertMovieList(listOf(data))
+      success()
+    }.onError {
+      error()
+    }.onException {
+      error()
+    }
+  }
 }

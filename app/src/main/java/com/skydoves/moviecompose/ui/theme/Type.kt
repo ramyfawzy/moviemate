@@ -27,54 +27,96 @@ import androidx.compose.ui.unit.sp
 val DarkTypography = Typography(
   h1 = TextStyle(
     fontFamily = FontFamily.Default,
-    fontWeight = FontWeight.Bold,
+    fontWeight = FontWeight.ExtraBold,
     color = Color.White,
-    fontSize = 28.sp,
+    fontSize = 32.sp,
+    letterSpacing = 0.sp
   ),
   h2 = TextStyle(
     fontFamily = FontFamily.Default,
     fontWeight = FontWeight.Bold,
     color = Color.White,
-    fontSize = 21.sp,
+    fontSize = 24.sp,
+    letterSpacing = 0.15.sp
+  ),
+  h3 = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.SemiBold,
+    color = Color.White,
+    fontSize = 20.sp
   ),
   body1 = TextStyle(
     fontFamily = FontFamily.Default,
     fontWeight = FontWeight.Normal,
-    color = Color.White,
-    fontSize = 14.sp,
+    color = Slate200,
+    fontSize = 16.sp,
+    lineHeight = 24.sp
   ),
   body2 = TextStyle(
     fontFamily = FontFamily.Default,
     fontWeight = FontWeight.Normal,
-    color = white87,
+    color = Slate400,
     fontSize = 14.sp,
+    lineHeight = 20.sp
   ),
+  button = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Bold,
+    fontSize = 14.sp,
+    letterSpacing = 1.25.sp
+  ),
+  caption = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Medium,
+    color = Slate400,
+    fontSize = 12.sp
+  )
 )
 
 // set of light material typography styles to start with.
 val LightTypography = Typography(
   h1 = TextStyle(
     fontFamily = FontFamily.Default,
-    fontWeight = FontWeight.Bold,
-    color = background900,
-    fontSize = 28.sp,
+    fontWeight = FontWeight.ExtraBold,
+    color = Slate900,
+    fontSize = 32.sp
   ),
   h2 = TextStyle(
     fontFamily = FontFamily.Default,
     fontWeight = FontWeight.Bold,
-    color = background900,
-    fontSize = 21.sp,
+    color = Slate900,
+    fontSize = 24.sp
+  ),
+  h3 = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.SemiBold,
+    color = Slate900,
+    fontSize = 20.sp
   ),
   body1 = TextStyle(
     fontFamily = FontFamily.Default,
     fontWeight = FontWeight.Normal,
-    color = background800,
-    fontSize = 14.sp,
+    color = Slate800,
+    fontSize = 16.sp,
+    lineHeight = 24.sp
   ),
   body2 = TextStyle(
     fontFamily = FontFamily.Default,
     fontWeight = FontWeight.Normal,
-    color = background800,
+    color = Slate400,
     fontSize = 14.sp,
+    lineHeight = 20.sp
   ),
+  button = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Bold,
+    fontSize = 14.sp,
+    letterSpacing = 1.25.sp
+  ),
+  caption = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Medium,
+    color = Slate400,
+    fontSize = 12.sp
+  )
 )

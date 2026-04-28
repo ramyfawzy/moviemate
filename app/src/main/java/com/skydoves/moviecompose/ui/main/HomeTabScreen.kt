@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -92,17 +91,22 @@ private fun HomeTabScreen(
     topBar = { MainAppBar() },
     bottomBar = {
       BottomNavigation(
-        backgroundColor = purple200,
+        backgroundColor = MaterialTheme.colors.primary,
         modifier = Modifier.navigationBarsPadding(),
       ) {
         tabs.forEach { tab ->
           BottomNavigationItem(
             icon = { Icon(imageVector = tab.icon, contentDescription = null) },
-            label = { Text(text = stringResource(tab.title), color = Color.White) },
+            label = {
+              Text(
+                text = stringResource(tab.title),
+                color = if (tab == selectedTab) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onPrimary.copy(alpha = 0.6f)
+              )
+            },
             selected = tab == selectedTab,
             onClick = { onTabSelected(tab) },
-            selectedContentColor = LocalContentColor.current,
-            unselectedContentColor = LocalContentColor.current,
+            selectedContentColor = MaterialTheme.colors.onPrimary,
+            unselectedContentColor = MaterialTheme.colors.onPrimary.copy(alpha = 0.6f),
           )
         }
       }

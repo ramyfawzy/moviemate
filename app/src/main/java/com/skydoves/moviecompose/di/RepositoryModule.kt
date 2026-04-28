@@ -41,10 +41,11 @@ object RepositoryModule {
   @ViewModelScoped
   fun provideDiscoverRepository(
     discoverService: TheDiscoverService,
+    movieService: MovieService,
     movieDao: MovieDao,
     tvDao: TvDao,
   ): DiscoverRepository {
-    return DiscoverRepository(discoverService, movieDao, tvDao)
+    return DiscoverRepository(discoverService, movieService, movieDao, tvDao)
   }
 
   @Provides

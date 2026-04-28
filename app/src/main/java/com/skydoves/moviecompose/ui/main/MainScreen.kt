@@ -20,6 +20,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -30,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -128,7 +128,7 @@ fun MainScreen() {
 fun MainAppBar() {
   TopAppBar(
     elevation = 6.dp,
-    backgroundColor = purple200,
+    backgroundColor = MaterialTheme.colors.primary,
     modifier = Modifier.height(58.dp),
   ) {
     Text(
@@ -136,8 +136,8 @@ fun MainAppBar() {
         .padding(8.dp)
         .align(Alignment.CenterVertically),
       text = stringResource(R.string.app_name),
-      color = Color.White,
-      fontSize = 18.sp,
+      color = MaterialTheme.colors.onPrimary,
+      fontSize = 20.sp,
       fontWeight = FontWeight.Bold,
     )
   }

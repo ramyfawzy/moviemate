@@ -16,11 +16,14 @@
 
 package com.skydoves.moviecompose.network.service
 
+import com.skydoves.moviecompose.models.entities.Movie
 import com.skydoves.moviecompose.models.network.KeywordListResponse
 import com.skydoves.moviecompose.models.network.ReviewListResponse
 import com.skydoves.moviecompose.models.network.VideoListResponse
 import com.skydoves.sandwich.ApiResponse
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface MovieService {
@@ -59,4 +62,16 @@ interface MovieService {
    */
   @GET("/3/movie/{movie_id}/reviews")
   suspend fun fetchReviews(@Path("movie_id") id: Long): ApiResponse<ReviewListResponse>
+
+  /**
+   * [Post Movie]
+   *
+   * Post a movie to the backend.
+   *
+   * @param [movie] The movie to be posted.
+   *
+   * @return [Movie] response
+   */
+  @POST("/3/movie")
+  suspend fun postMovie(@Body movie: Movie): ApiResponse<Movie>
 }
